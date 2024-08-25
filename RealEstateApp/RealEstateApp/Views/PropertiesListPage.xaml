@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RealEstateApp.Views.PropertiesListPage"
+             xmlns:viewmodel="clr-namespace:RealEstateApp.ViewModels"
+             x:DataType="viewmodel:PropertiesListViewModel"
+             xmlns:model="clr-namespace:RealEstateApp.Models"
+             Shell.PresentationMode="ModalAnimated">
+
+    <Grid Margin="10,0,10,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0"
+              Padding="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <ImageButton Source="back_icon"
+                         CornerRadius="10"
+                         BackgroundColor="White"
+                         Opacity="0.8"
+                         HeightRequest="40"
+                         WidthRequest="40"
+                         Padding="5"
+                         HorizontalOptions="Start"
+                         VerticalOptions="Start"
+                         Grid.Column="0" 
+                         Command="{Binding GoBackCommand}"/>
+
+            <Label Grid.Column="1"
+                   Text="Property List"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Start"
+                   FontSize="Large" />
+        </Grid>
+        <CollectionView  Margin="10"
+                         SelectionMode="Single"
+                         Grid.Row="1"
+                         ItemsSource="{Binding PropertyByCategoryCollection}"
+                         SelectedItem="{Binding SelectedProperty}"
+                         SelectionChangedCommand="{Binding GoToPropertyDetailCommand}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="20"
+                                   Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:PropertyByCategory">
+                    <Border BackgroundColor="Transparent"
+                            Stroke="Transparent">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Grid BackgroundColor="White"
+                              Padding="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4*" />
+                                <ColumnDefinition Width="6*" />
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0"
+                                    BackgroundColor="Transparent"
+                                    Stroke="Transparent">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10" />
+                                </Border.StrokeShape>
+                                <Image HeightRequest="120"
+                                       Aspect="Fill" 
+                                       Source="{Binding ImageUrl}"/>
+                            </Border>
+                            <StackLayout Grid.Column="1"
+                                         Margin="10,5,0,0"
+                                         Spacing="10">
+                                <Label FontSize="Medium"
+                                       FontAttributes="Bold" 
+                                       Text="{Binding Name}"/>
+
+                                <Label FontSize="Small"
+                                       TextColor="#848484" 
+                                       Text="{Binding Address}"/>
+                                <Label FontSize="Medium"
+                                       FontAttributes="Bold" 
+                                       Text="{Binding Price , StringFormat='${0}'}"/>
+                            </StackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+
+</ContentPage>

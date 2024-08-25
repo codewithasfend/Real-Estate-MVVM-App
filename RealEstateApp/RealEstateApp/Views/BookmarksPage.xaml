@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RealEstateApp.Views.BookmarksPage"
+             xmlns:viewmodel="clr-namespace:RealEstateApp.ViewModels"
+             xmlns:bahaviors="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             x:DataType="viewmodel:BookmarkViewModel"
+             xmlns:model="clr-namespace:RealEstateApp.Models">
+
+    <ContentPage.Behaviors>
+        <bahaviors:EventToCommandBehavior  EventName="Appearing"
+                                           Command="{Binding LoadBookmarksCommand}"/>
+    </ContentPage.Behaviors>
+
+    <Grid Margin="10,0,10,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0"
+               Margin="0,10,0,0"
+               Text="Bookmarks"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               FontSize="Large" />
+
+        <CollectionView Margin="10,20,10,10"
+                        Grid.Row="1"
+                        SelectionMode="Single"
+                        ItemsSource="{Binding BookmarksCollection}"
+                        SelectedItem="{Binding SelectedProperty}"
+                        SelectionChangedCommand="{Binding GoToPropertyDetailCommand}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="20"
+                                   Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:BookmarkedProperty">
+
+                    <Border Padding="0"
+                            Margin="0"
+                            Stroke="Transparent"
+                            BackgroundColor="Transparent">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Grid BackgroundColor="White">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4*" />
+                                <ColumnDefinition Width="6*" />
+                            </Grid.ColumnDefinitions>
+                            <Frame Grid.Column="0"
+                                   BackgroundColor="Transparent"
+                                   BorderColor="Transparent"
+                                   CornerRadius="10"
+                                   Padding="0"
+                                   Margin="5"
+                                   IsClippedToBounds="True">
+
+                                <Image HeightRequest="120"
+                                       Aspect="Fill" 
+                                       Source="{Binding ImageUrl}"/>
+                            </Frame>
+
+
+                            <StackLayout Grid.Column="1"
+                                         Margin="10,5,0,0"
+                                         Spacing="10">
+                                <Label FontSize="Medium"
+                                       FontAttributes="Bold" 
+                                       Text="{Binding Name}"/>
+
+                                <Label FontSize="Small"
+                                       TextColor="Gray" 
+                                       Text="{Binding Address}"/>
+                                <Label FontSize="Medium"
+                                       FontAttributes="Bold" 
+                                       Text="{Binding Price, StringFormat='{0}$'}"/>
+                            </StackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+
+</ContentPage>

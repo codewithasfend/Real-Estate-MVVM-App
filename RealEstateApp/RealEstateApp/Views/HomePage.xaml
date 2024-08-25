@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RealEstateApp.Views.HomePage"
+             xmlns:viewmodel="clr-namespace:RealEstateApp.ViewModels"
+             x:DataType="viewmodel:HomeViewModel"
+             xmlns:model="clr-namespace:RealEstateApp.Models">
+
+    <ScrollView>
+        <Grid Margin="20"
+              RowSpacing="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <VerticalStackLayout Grid.Row="0"
+                                 Spacing="5">
+                <Label FontSize="Large"
+                       FontAttributes="Bold" 
+                       Text="{Binding Username}"/>
+                <Label Text="Find your best place to stay"
+                       FontAttributes="Bold"
+                       FontSize="Large" />
+            </VerticalStackLayout>
+
+            <Frame Grid.Row="1"
+                   Padding="15"
+                   BorderColor="Transparent"
+                   BackgroundColor="#ECECEC">
+                <HorizontalStackLayout Spacing="20">
+                    <Image Source="search_icon"
+                           Aspect="AspectFit"
+                           HeightRequest="20"
+                           WidthRequest="20" />
+                    <Label Text="Search..."
+                           VerticalOptions="Center"
+                           TextColor="#848484" />
+                </HorizontalStackLayout>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SearchCommand}"/>
+                </Frame.GestureRecognizers>
+            </Frame>
+
+            <VerticalStackLayout Grid.Row="2"
+                                 Spacing="20">
+                <Label Text="Categories"
+                       FontSize="Large"
+                       FontAttributes="Bold" />
+                <CollectionView HeightRequest="50"
+                                SelectionMode="Single"
+                                ItemsSource="{Binding CategoriesCollection}"
+                                SelectedItem="{Binding SelectedCategory}"
+                                SelectionChangedCommand="{Binding GoToPropertiesListCommand}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="20"
+                                           Orientation="Horizontal" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Category">
+                            <Border Padding="10"
+                                    BackgroundColor="#ECECEC"
+                                    Stroke="Transparent">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10" />
+                                </Border.StrokeShape>
+                                <HorizontalStackLayout Spacing="5">
+                                    <Image Aspect="AspectFit"
+                                           HeightRequest="30"
+                                           WidthRequest="30" 
+                                           Source="{Binding ImageUrl}"/>
+                                    <Label VerticalOptions="Center"
+                                           FontSize="Medium"
+                                           TextColor="#555555" 
+                                           Text="{Binding Name}"/>
+                                </HorizontalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Row="3"
+                                 Spacing="20">
+                <Label Text="Top Picks"
+                       FontSize="Large"
+                       FontAttributes="Bold" />
+                <CollectionView HeightRequest="320"
+                                SelectionMode="Single"
+                                ItemsSource="{Binding TrendingPropertiesCollection}"
+                                SelectedItem="{Binding SelectedProperty}"
+                                SelectionChangedCommand="{Binding GoToPropertyDetailCommand}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="20"
+                                           Orientation="Horizontal" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:TrendingProperty">
+
+
+                            <Border Padding="15"
+                                    BackgroundColor="White"
+                                    Stroke="#FFFFFF">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="25" />
+                                </Border.StrokeShape>
+                                <Grid RowSpacing="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.Row="0"
+                                            HeightRequest="200"
+                                            WidthRequest="250"
+                                            Padding="0"
+                                            Stroke="Transparent">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="25" />
+                                        </Border.StrokeShape>
+                                        <Image Aspect="Fill" 
+                                               Source="{Binding ImageUrl}"/>
+                                    </Border>
+                                    <Label Grid.Row="1"
+                                           FontSize="Medium"
+                                           FontAttributes="Bold" 
+                                           Text="{Binding Name}"/>
+                                    <Label Grid.Row="2"
+                                           FontSize="Small"
+                                           TextColor="#848484"
+                                           WidthRequest="250"
+                                           LineBreakMode="TailTruncation" 
+                                           Text="{Binding Address}"/>
+                                    <Label Grid.Row="3"
+                                           FontSize="Medium"
+                                           FontAttributes="Bold"
+                                           TextColor="Black" 
+                                           Text="{Binding Price,StringFormat='${0}'}"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
+
+</ContentPage>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RealEstateApp.Views.PropertyDetailPage"
+             xmlns:viewmodel="clr-namespace:RealEstateApp.ViewModels"
+             x:DataType="viewmodel:PropertyDetailViewModel"
+             xmlns:model="clr-namespace:RealEstateApp.Models"
+             Shell.PresentationMode="ModalAnimated">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0"
+               VerticalOptions="Start"
+               Aspect="Fill"
+               HeightRequest="280"
+               Grid.RowSpan="3" 
+               Source="{Binding PropertyDetail.ImageUrl}"/>
+        <StackLayout Orientation="Horizontal"
+                     Grid.Row="1"
+                     Margin="20,0,20,0">
+            <ImageButton Source="back_icon"
+                         CornerRadius="10"
+                         BackgroundColor="White"
+                         Opacity="0.8"
+                         HeightRequest="40"
+                         WidthRequest="40"
+                         Padding="5"
+                         HorizontalOptions="Start"
+                         VerticalOptions="Start"
+                         Command="{Binding GoBackCommand}"/>
+
+            <ImageButton CornerRadius="10"
+                         BackgroundColor="White"
+                         Opacity="0.8"
+                         HeightRequest="40"
+                         WidthRequest="40"
+                         Padding="8"
+                         HorizontalOptions="EndAndExpand"
+                         VerticalOptions="Start" 
+                         Source="{Binding BookmarkIcon}"
+                         Command="{Binding ToggleBookmarkCommand}"/>
+        </StackLayout>
+        <VerticalStackLayout Grid.Row="3"
+                             Margin="20">
+            <Label  FontSize="Large"
+                    FontAttributes="Bold" 
+                    Text="{Binding PropertyDetail.Price, StringFormat='{0}$'}"/>
+            <HorizontalStackLayout  Spacing="5">
+                <Image HeightRequest="20"
+                       VerticalOptions="Center"
+                       Source="location_icon" />
+                <Label TextColor="#848484"
+                       VerticalOptions="Start"
+                       WidthRequest="360"
+                       FontSize="Subtitle" 
+                       Text="{Binding PropertyDetail.Address}"/>
+            </HorizontalStackLayout>
+            <Label Text="Description"
+                   Margin="0,20,0,10"
+                   FontSize="Large"
+                   FontAttributes="Bold" />
+            <Label FontSize="Subtitle"
+                   TextColor="#848484" 
+                   Text="{Binding PropertyDetail.Detail}"/>
+        </VerticalStackLayout>
+        <HorizontalStackLayout Grid.Row="4"
+                               Margin="0,0,0,10"
+                               VerticalOptions="EndAndExpand"
+                               HorizontalOptions="Center"
+                               Spacing="30">
+            <Frame HeightRequest="70"
+                   WidthRequest="150"
+                   CornerRadius="35"
+                   BackgroundColor="#2A5F73">
+                <HorizontalStackLayout Spacing="10">
+                    <Image HeightRequest="25"
+                           WidthRequest="25"
+                           VerticalOptions="Center"
+                           Source="message_icon" />
+                    <Label Text="Message"
+                           FontSize="Medium"
+                           TextColor="White"
+                           VerticalOptions="Center" />
+                </HorizontalStackLayout>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding MessageCommand}" />
+                </Frame.GestureRecognizers>
+            </Frame>
+
+            <Frame HeightRequest="70"
+                   WidthRequest="150"
+                   CornerRadius="35"
+                   BackgroundColor="#2A5F73">
+                <HorizontalStackLayout Spacing="20">
+                    <Image HeightRequest="25"
+                           WidthRequest="25"
+                           VerticalOptions="Center"
+                           HorizontalOptions="CenterAndExpand"
+                           Source="phone_icon" />
+                    <Label Text="Call"
+                           FontSize="Medium"
+                           TextColor="White"
+                           HorizontalOptions="StartAndExpand"
+                           VerticalOptions="Center" />
+                </HorizontalStackLayout>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CallCommand}"/>
+                </Frame.GestureRecognizers>
+            </Frame>
+
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>
